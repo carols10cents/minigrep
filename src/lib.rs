@@ -3,7 +3,9 @@ use std::fs::File;
 use std::io::prelude::*;
 
 pub fn search<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
-    vec![]
+    for line in contents.lines() {
+        // do something with line
+    }
 }
 
 pub struct Config {
