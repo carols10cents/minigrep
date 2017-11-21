@@ -30,6 +30,7 @@ pub fn search_case_insensitive<'a>(query: &str, contents: &'a str) -> Vec<&'a st
 pub struct Config {
     pub query: String,
     pub filename: String,
+    pub case_sensitive: bool,
 }
 
 impl Config {
@@ -45,13 +46,19 @@ impl Config {
     }
 }
 
-pub fn run(config: Config) -> Result<(), Box<Error>> {
+pub fn run(config: Config) -> Result<(), Box<Error>>{
     let mut f = File::open(config.filename)?;
 
     let mut contents = String::new();
     f.read_to_string(&mut contents)?;
 
-    for line in search(&config.query, &contents) {
+    let results = if config.case_sensitive {
+        search(&config.query, &contents)
+    } else {
+        search_case_insensitive(&config.query, &contents)
+    };
+
+    for line in results {
         println!("{}", line);
     }
 
