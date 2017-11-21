@@ -1,6 +1,7 @@
 use std::error::Error;
 use std::fs::File;
 use std::io::prelude::*;
+use std::env;
 
 pub fn search<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
     let mut results = Vec::new();
@@ -42,7 +43,9 @@ impl Config {
         let query = args[1].clone();
         let filename = args[2].clone();
 
-        Ok(Config { query, filename })
+        let case_sensitive = env::var("CASE_INSENSITIVE").is_err();
+
+        Ok(Config { query, filename, case_sensitive })
     }
 }
 
