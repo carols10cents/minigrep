@@ -4,7 +4,9 @@ use std::io::prelude::*;
 
 pub fn search<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
     for line in contents.lines() {
-        // do something with line
+        if line.contains(query) {
+            // do something with line
+        }
     }
 }
 
